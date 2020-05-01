@@ -17,16 +17,17 @@ function sol = GS_FirstOrderExplicit_Periodic(str)
 %Load init into solution
    sol.u=init.u;
    sol.v=init.v;
+   iFrame=1;
 %Load init for solver
    uOld=init.u;
    vOld=init.v;
 for it=2:length(tspan)
     %Solve change due to laplacian (unscaled by diffusion or h)
-    uDeltaDif=dLaplacian_CenterDiff(uOld);
-    vDeltaDif=dLaplacian_CenterDiff(vOld);
-    %Compute Linear Component
-    uNew=uOld+dt*(Du*uDeltaDif/h^2+F*(1-uOld)-uOld*vOld.^2);
-    vNew=vOld+dt*(Dv*vDeltaDif/h^2-(F+k)*vOld+uOld*vOld.^2);
+    uDiffusion=dLaplacian_CenterDiff(uOld);
+    vDiffusion=dLaplacian_CenterDiff(vOld);
+    %Compute NonLinear Component
+    uNew=uOld+dt*(Du*uDiffusion/(h^2)+  F  *(1-uOld)-uOld.*vOld.^2);
+    vNew=vOld+dt*(Dv*vDiffusion/(h^2)-(F+k)*  vOld  +uOld.*vOld.^2);
     if sum(sum(isnan(uNew)))~=0
         error('NaN in Solution')
     end
@@ -41,9 +42,7 @@ for it=2:length(tspan)
     uOld=uNew;
     vOld=vNew;
 end
-%Load into sol
-sol.u=u;
-sol.v=v;
+
 end
 
 %     for ix1=1:length(xspan(1,:))

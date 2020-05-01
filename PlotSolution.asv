@@ -14,11 +14,10 @@ colormap parula;
 if strcmpi(str.movie.makeMovie,'yes')
     fprintf('Making movie\n')
     %Setup base Frame
-    imagesc(xspan(1,:),xspan(2,:),sol.u(:,:,1))
+    imagesc(sol.u(:,:,1))
     xlabel('x_1')
     ylabel('x_2')
     colorbar
-    caxis([0 .4]);
     title(sprintf('U(x,t), t=%i',tspan(1)))
     %Update automatically update next plot
     set(gca,'nextplot','replacechildren')
@@ -27,10 +26,10 @@ if strcmpi(str.movie.makeMovie,'yes')
     for iframe=1:movieFrames
         %Plot U
         %heatmap(xspan(1,:),xspan(2,:),frames.u(:,:,iframe))
-        imagesc(xspan(1,:),xspan(2,:),sol.v(:,:,iframe))
+        imagesc(sol.u(:,:,iframe))
         xlabel('x_1')
         ylabel('x_2')
-        title(sprintf('V(x,t), t=%i',str.frameSpan(iframe)))
+        title(sprintf('U(x,t), t=%i',str.frameSpan(iframe)))
         frame=getframe(gcf);
         writeVideo(v,frame);
         %Pause to keep steady frame rate

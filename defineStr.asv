@@ -19,8 +19,8 @@ switch str.EquationType
             params.F=.035;
             str.movie.file='..\\Figures\\Culture-Squiggles.avi';
         elseif strcmpi(str.paramSet,'Culture')
-            params.k=.0575;
-            params.F=.018;
+            params.k=.0625;
+            params.F=.028;
             str.movie.file='..\\Figures\\Culture.avi';
         end
         params.Du=2*10^(-5);
@@ -29,7 +29,7 @@ switch str.EquationType
         x1min=0; x1max=2.5;
         x2min=0; x2max=2.5;
         h=x1max/(255);
-        tmin=0;  tmax=30000;
+        tmin=0;  tmax=20000;
         initType='B-Core(Pearson)';
         str.movie.length=20;
         str.movie.frames=240;
