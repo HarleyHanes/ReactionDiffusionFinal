@@ -3,6 +3,8 @@ function sol = GS_FirstOrderExplicit_Periodic(str)
 %using 1st order forward difference approximation of time derivate and 1st
 %order centered difference approximation of laplacian
 %   Detailed explanation goes here
+
+tspan=str.tspan;
 %Load Params
    params=str.params;
    k=params.k;
@@ -11,15 +13,13 @@ function sol = GS_FirstOrderExplicit_Periodic(str)
    Dv=params.Dv;
    h=str.h;
    dt=str.dt;
-   init=str.init;
-   tspan=str.tspan;
-   frameSpan=str.frameSpan;
-%Load init into solution
-   sol.u=init.u;
-   sol.v=init.v;
-%Load init for solver
-   uOld=init.u;
-   vOld=init.v;
+   frameSpan=str.frameSpan
+   %Load in
+   sol.u=str.init.u;
+   sol.v=str.init.v;
+   %Load init for solver
+   uOld=str.init.u;
+   vOld=str.init.v;
 for it=2:length(tspan)
     %Solve change due to laplacian (unscaled by diffusion or h)
     uDeltaDif=dLaplacian_CenterDiff(uOld);

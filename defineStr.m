@@ -5,8 +5,8 @@ function str = defineStr(str)
 fprintf('Loading %s parameter set\n',str.EquationType)
 switch str.EquationType
     case 'Gray-Scott(Pearson)'
-        h=1/(256+1);
-        dt=1;
+        h=1/(255);
+        dt=.5;
         params.k=.00625;
         params.F=.004;
         params.Du=2*10^(-5);
@@ -22,6 +22,8 @@ end
 xpsan=[x1min:h:x1max;x2min:h:x2max];
 tspan=tmin:dt:tmax;
 %Load into str
+
+str.frameSpan=floor(linspace(1,length(tspan),str.movie.frames));
 str.solver=solver;
 str.xspan=xpsan;
 str.tspan=tspan;

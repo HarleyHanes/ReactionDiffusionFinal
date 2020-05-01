@@ -8,22 +8,18 @@ xspan=str.xspan;
 movieLength=str.movie.length;
 movieFrames=str.movie.frames;
 tFrame=movieLength/movieFrames;
-%Isolate Frames
-tspanFrame=floor(linspace(1,length(tspan),movieFrames));
-frames.u=sol.u(:,:,tspanFrame);
-frames.v=sol.v(:,:,tspanFrame);
 %Make Colormaps
 colormap gray;
 %Plot init
 subplot(1,2,1)
 %heatmap(xspan(1,:),xspan(2,:),frames.u(:,:,1))
-imagesc(frames.u(:,:,1))
+imagesc(sol.u(:,:,1))
 xlabel('x_1')
 ylabel('x_2')
 title(sprintf('U(x,t), t=%i',tspan(1)))
 subplot(1,2,2)
 %heatmap(xspan(1,:),xspan(2,:),frames.v(:,:,1))
-imagesc(frames.v(:,:,1))
+imagesc(sol.v(:,:,1))
 xlabel('x_1')
 ylabel('x_2')
 title(sprintf('V(x,t), t=%i',tspan(1)))
