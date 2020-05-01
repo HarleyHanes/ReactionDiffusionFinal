@@ -6,7 +6,7 @@ clear; close all; clc;
     str.paramSet='Squiggles';%Define different parameter sets for different observations
 %Numerical Solvers
     str.LaplacianSolver=@(uOld,str)dLaplacian_CenterDiff(uOld,str);
-    str.ODESolver=@(uOld,vOld,uDiffusion,vDiffusion,str)ForwardEuler(uOld,vOld,uDiffusion,vDiffusion,str);
+    str.
 %PlotSettings
     str.movie.makeMovie='yes';
 %% Set up Problem
@@ -15,6 +15,6 @@ clear; close all; clc;
     %Define Latice and Intial Conditions
         str.init=getInits(str);
 %% Solve Problem
-    str.sol=solve2S2DReactionDiffusion(str);
+    str.sol=str.solver(str);
 %% Plot Problem
     PlotSolution(str)

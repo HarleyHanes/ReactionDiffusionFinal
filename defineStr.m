@@ -5,7 +5,7 @@ function str = defineStr(str)
 fprintf('Loading %s parameter set\n',str.EquationType)
 switch str.EquationType
     case 'Gray-Scott(Pearson)'
-        dt=1;
+        %Set k and F terms
         if strcmpi(str.paramSet,'Squiggles')
             params.k=.0625;
             params.F=.04;
@@ -23,23 +23,29 @@ switch str.EquationType
             params.F=.018;
             str.movie.file='..\\Figures\\Culture.avi';
         end
+        %Define Difussion Terms
         params.Du=2*10^(-5);
         params.Dv=10^(-5);
-        solver=@(str)GS_FirstOrderExplicit_Periodic(str);
+        %Set up ODE functions
+        str.Ru=@(params,u,v)(params.F*(1-u)-u.*v.^2);
+        str.Rv=@(params,u,v)(-(params.F+params.k)*v+u.*v.^2);
+        %Inits
         x1min=0; x1max=2.5;
         x2min=0; x2max=2.5;
-        h=x1max/(255);
         tmin=0;  tmax=30000;
         initType='B-Core(Pearson)';
+        %Movie Settings
         str.movie.length=20;
         str.movie.frames=240;
+        %Set h and dt
+        h=x1max/(255);
+        dt=1;
 end
 xpsan=[x1min:h:x1max;x2min:h:x2max];
 tspan=tmin:dt:tmax;
 %Load into str
 
 str.frameSpan=floor(linspace(1,length(tspan),str.movie.frames));
-str.solver=solver;
 str.xspan=xpsan;
 str.tspan=tspan;
 str.params=params;

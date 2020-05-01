@@ -1,4 +1,4 @@
-function sol = GS_FirstOrderExplicit_Periodic(str)
+function uNew = ForwardEuler(uDiffusion,uOld,str)
 %GS_FirstOrderExplicit_Periodic: Explicit Solver for Gray-Scott system
 %using 1st order forward difference approximation of time derivate and 1st
 %order centered difference approximation of laplacian
@@ -9,38 +9,18 @@ function sol = GS_FirstOrderExplicit_Periodic(str)
    F=params.F;
    Du=params.Du;
    Dv=params.Dv;
-   h=str.h;
    dt=str.dt;
    init=str.init;
-   tspan=str.tspan;
-   frameSpan=str.frameSpan;
-%Load init into solution
-   sol.u=init.u;
-   sol.v=init.v;
-   iFrame=1;
 %Load init for solver
    uOld=init.u;
    vOld=init.v;
 for it=2:length(tspan)
     %Solve change due to laplacian (unscaled by diffusion or h)
-    uDiffusion=dLaplacian_CenterDiff(uOld);
-    vDiffusion=dLaplacian_CenterDiff(vOld);
+    uDiffusion=solveLaplacian(uOld,str);
+    vDiffusion=solveLaplcaian(vOld,str);
     %Compute NonLinear Component
-    uNew=uOld+dt*(Du*uDiffusion/(h^2)+  F  *(1-uOld)-uOld.*vOld.^2);
-    vNew=vOld+dt*(Dv*vDiffusion/(h^2)-(F+k)*  vOld  +uOld.*vOld.^2);
-    if sum(sum(isnan(uNew)))~=0
-        error('NaN in Solution')
-    end
-    if sum(sum(isnan(vNew)))~=0
-        error('NaN in Solution')
-    end
-    if sum(it==frameSpan)==1
-        iFrame=iFrame+1;
-        sol.u(:,:,iFrame)=uNew;
-        sol.v(:,:,iFrame)=vNew;
-    end
-    uOld=uNew;
-    vOld=vNew;
+    uNew=uOld+dt*(Du*uDiffusion+  F  *(1-uOld)-uOld.*vOld.^2);
+    vNew=vOld+dt*(Dv*vDiffusion-(F+k)*  vOld  +uOld.*vOld.^2);
 end
 
 end

@@ -1,7 +1,8 @@
-function UdeltaDif = dLaplacian_CenterDiff(uOld)
+function UdeltaDif = dLaplacian_CenterDiff(uOld,str)
 %Calculates the change due to diffusion with 1st Order centered Difference
 %   Approximation
  UdeltaDif=NaN(size(uOld));
+ h=str.h;
 %Set Interior
     inspan(1,:)=2:size(uOld,1)-1;
     inspan(2,:)=2:size(uOld,2)-1;
@@ -32,7 +33,7 @@ function UdeltaDif = dLaplacian_CenterDiff(uOld)
         %BottomRight
         UdeltaDif(end,end)=(uOld(1,end)+uOld(end-1,end)+uOld(end,1)+uOld(end,end-1));
 %Negative Terms
-    UdeltaDif(:,:)=UdeltaDif(:,:)-4*uOld;
+    UdeltaDif(:,:)=(UdeltaDif(:,:)-4*uOld)/h^2;
 end
 
 % for ix=1:size(uOld,1)
