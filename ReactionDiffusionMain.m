@@ -2,8 +2,9 @@
 clear; close all; clc;
 %% Executive Control
 %Problem Type
-    str.EquationType='Gray-Scott(Pearson)';% Gray-Scott or FitzHugh-Nagumo
-    str.paramSet='Squiggles';%Define different parameter sets for different observations
+    str.EquationType='Gray-Scott(Pearson)';%'FitzHugh-Nagumo (Murray)';% Gray-Scott or FitzHugh-Nagumo
+    str.paramSet='Culture';%Define different parameter sets for different observations
+    %str.initSet='Center';
 %Numerical Solvers
     str.LaplacianSolver=@(uOld,str)dLaplacian_CenterDiff(uOld,str);
     str.ODESolver=@(uOld,vOld,uDiffusion,vDiffusion,str)ForwardEuler(uOld,vOld,uDiffusion,vDiffusion,str);

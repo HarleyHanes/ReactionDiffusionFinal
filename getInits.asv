@@ -63,11 +63,17 @@ switch str.initType
         %Set all U
         u(:,:,1)=zeros(size(lattice));
         v(:,:,1)=zeros(size(lattice));
-        %Scatter 4 uPoints
-        u(4:7,15:18,1)=uPoint;
-        u(1:4,50:53,1)=uPoint;
-        u(48:51,30:33,1)=uPoint;
-        u(80:83,80:83,1)=uPoint;
+        %Define inner 10% 
+        boundaryStep=round(length(xspan)*.45);
+        innerAreax=boundaryStep-30:1:length(xspan)-boundaryStep-30;
+        innerAreay=boundaryStep-15:1:length(xspan)-boundaryStep-15;
+        %Reset inner squares of u and v
+        u(innerAreax,innerAreay,1)=1;
+        v(innerAreax,innerAreay,1)=0;
+        %Add random perturbation
+        u(innerAreax,innerAreay,1)=u(innerAreax,innerAreay,1)+.01*(rand([length(innerAreax),length(innerAreay),1])-.5);
+        v(innerAreax,innerAreay,1)=v(innerAreax,innerAreay,1)+.01*(rand([length(innerAreax),length(innerAreay),1])-.5);     
+    
 end
 %Load into sol
 init.u=u;

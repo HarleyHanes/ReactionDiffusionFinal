@@ -19,8 +19,8 @@ switch str.EquationType
             params.F=.035;
             str.movie.file='..\\Figures\\Culture-Squiggles.avi';
         elseif strcmpi(str.paramSet,'Culture')
-            params.k=.0625;
-            params.F=.025;
+            params.k=.0575;
+            params.F=.018;
             str.movie.file='..\\Figures\\Culture.avi';
         end
         %Define Difussion Terms
@@ -53,19 +53,14 @@ switch str.EquationType
         tmin=0;  tmax=800;
         switch str.initSet
             case 'Scatter'
-                initType='Scatter';
-            case 'Off-Center'
-                initType='V-core (Off-Center)';
-            case 'V-Bar'
-                initType='V-Bar (Wallisch)';
-            case 'Center'
-                initType='V-core (Center)';
-        end
+                initType='Scatter'
+                str.mov
+        initType='V-core (Off-Center)';%'V-Bar (Wallisch)';
         %Set h and dt
         h=1;
         dt=1;
         %Movie File
-        str.movie.file=sprintf('..\\Figures\\FN-(%s).avi',str.initSet);
+        str.movie.file='..\\Figures\\FitzHugh-Nagumo.avi';
 end
 %Movie Settings
 str.movie.length=20;

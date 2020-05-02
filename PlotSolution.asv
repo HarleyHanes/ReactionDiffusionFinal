@@ -30,7 +30,7 @@ if strcmpi(str.movie.makeMovie,'yes')
     for iframe=1:movieFrames
         %Plot U
         if strcmpi(str.EquationType,'Gray-Scott(Pearson)')
-            imagesc(xspan(1,:),xspan(2,:),sol.v(:,:,iframe))
+            imagesc(xspan(1,:),xspan(2,:),sol.v(:,:,1))
             caxis([0 .4]);
         elseif strcmpi(str.EquationType,'FitzHugh-Nagumo (Murray)')
             imagesc(xspan(1,:),xspan(2,:),sol.u(:,:,iframe))
@@ -38,7 +38,7 @@ if strcmpi(str.movie.makeMovie,'yes')
         end
         xlabel('x_1')
         ylabel('x_2')
-        title(sprintf('V(x,t), t=%i',str.tspan(str.frameSpan(iframe))))
+        title(sprintf('V(x,t), t=%i',str.tspan(str.frameSpan(str.iframe))))
         frame=getframe(gcf);
         writeVideo(v,frame);
         %Pause to keep steady frame rate
